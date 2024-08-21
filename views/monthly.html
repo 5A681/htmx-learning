@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/fist_page.css">
+    <link rel="stylesheet" href="static/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <script src="static/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./static/script.js"></script>
+    <title>Golang htmx</title>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./static/pea.png" alt="" width="40" height="34" class="d-inline-block align-text-top">
+                <span style="font-weight: 700;color: var(--primary-color);">PEA</span>
+            </a>
+
+            <div style="display: flex;">
+                <div>
+                    <button type="button" class="btn btn-success" style="width: 100px;">Excel</button>
+                    <button type="button" class="btn btn-danger" style="width: 100px;">PDF</button>
+                </div>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Monthly
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="/monthly">Monthly</a></li>
+                        <li><a class="dropdown-item" href="/yearly">Yearly</a></li>
+                        <li><a class="dropdown-item" href="/">Daily</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <div style="display: flex;justify-content: end;margin-right: 5%;">
+        <div
+            style="display: flex;justify-content: center;font-size: 28px;font-weight: 700;color: var(--primary-color);">
+            <div style="display: flex;justify-content: center;align-items: center;">
+                Phon Phisai
+            </div>
+            <div>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--primary-color);">
+                        <span id="dropdownTitle">OUT1</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 1',1)">OUT 1</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 2',2)">OUT 2</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 3',3)">OUT 3</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 4',4)">OUT 4</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 5',5)">OUT 5</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 6',6)">OUT 6</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 7',7)">OUT 7</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 8',8)">OUT 8</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 9',9)">OUT 9</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);"
+                                onclick="changeBayMonthly('OUT 10',10)">OUT 10</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div style="display: flex-container;width: 90%;margin-left: 5%;">
+        <div style="flex-grow: 1;">
+
+
+            <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">Day Time Peak
+            </div>
+            <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">08:00-15:30
+            </div>
+            <table class="table" style="width: 100%;">
+                <tr class="header-row">
+                    <th scope="col">Date </th>
+                    <th scope="col">Time </th>
+                    <th scope="col">Vab (kV) </th>
+                    <th scope="col">Vbc (kV) </th>
+                    <th scope="col">Vca (kV) </th>
+                    <th scope="col">Ia (A) </th>
+                    <th scope="col">Ib (A) </th>
+                    <th scope="col">Ic (A) </th>
+                    <th scope="col">P (MW) </th>
+                    <th scope="col">Q (MVAR) </th>
+                    <th scope="col">PF (%) </th>
+                </tr>
+
+                <tbody style="font-size: 9px;" hx-get="/day-time-peak" hx-trigger="load" id="body-table-day">
+
+
+                </tbody>
+            </table>
+        </div>
+        <div style="flex-grow: 1;">
+
+            <div>
+                <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">Night Time
+                    Peak</div>
+                <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">
+                    00:00-07-30, 16:00-23:30</div>
+                <table class="table" style="width: 100%;">
+
+                    <tr class="header-row">
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Vab (kV)</th>
+                        <th scope="col">Vbc (kV)</th>
+                        <th scope="col">Vca (kV)</th>
+                        <th scope="col">Ia (A)</th>
+                        <th scope="col">Ib (A)</th>
+                        <th scope="col">Ic (A)</th>
+                        <th scope="col">P (MW)</th>
+                        <th scope="col">Q (MVAR)</th>
+                        <th scope="col">PF (%)</th>
+                    </tr>
+
+                    <tbody style="font-size: 9px;" hx-get="/night-time-peak" hx-trigger="load" id="body-table-night">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="flex-grow: 1;">
+
+            <div>
+                <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">Day &
+                    Night Light Load</div>
+                <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">
+                    00:00-23:30</div>
+                <table class="table" style="width: 100%;">
+
+                    <tr class="header-row">
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Vab (kV)</th>
+                        <th scope="col">Vbc (kV)</th>
+                        <th scope="col">Vca (kV)</th>
+                        <th scope="col">Ia (A)</th>
+                        <th scope="col">Ib (A)</th>
+                        <th scope="col">Ic (A)</th>
+                        <th scope="col">P (MW)</th>
+                        <th scope="col">Q (MVAR)</th>
+                        <th scope="col">PF (%)</th>
+                    </tr>
+
+                    <tbody style="font-size: 9px;" hx-get="/all-time-peak" hx-trigger="load" id="body-table-all">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="static/htmx.min.js"></script>
+</body>
+
+</html>

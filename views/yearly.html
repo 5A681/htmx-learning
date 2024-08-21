@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./static/css/fist_page.css">
+  <link rel="stylesheet" href="static/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <script src="static/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./static/script.js"></script>
+  <title>Golang htmx</title>
+</head>
+
+<body class="bg-light">
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./static/pea.png" alt="" width="40" height="34" class="d-inline-block align-text-top">
+        <span style="font-weight: 700;color: var(--primary-color);">PEA</span>
+      </a>
+
+      <div style="display: flex;">
+        <div>
+          <button type="button" class="btn btn-success" style="width: 100px;">Excel</button>
+          <button type="button" class="btn btn-danger" style="width: 100px;">PDF</button>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Yearly
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/yearly">Yearly</a></li>
+            <li><a class="dropdown-item" href="/">Daily</a></li>
+            <li><a class="dropdown-item" href="/monthly">Monthly</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+  <div
+    style="display: flex;justify-content: end;font-size: 28px;font-weight: 700;color: var(--primary-color);margin-right: 5%;">
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false" style="color: var(--primary-color);" hx-get="/latest-year" hx-trigger="load">
+        2024
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" hx-get="/year-list" hx-trigger="load" id="yearlist">
+        <!-- <li><a class="dropdown-item" href="#" style="color: var(--primary-color);">2023</a></li>
+        <li><a class="dropdown-item" href="#" style="color: var(--primary-color);">2022</a></li> -->
+      </ul>
+    </div>
+  </div>
+
+  </div>
+  <div
+    style="display: flex;justify-content: end;font-size: 28px;font-weight: 700;color: var(--primary-color);margin-right: 5%;">
+    <div style="display: flex;justify-content: center;align-items: center;">
+      Phon Phisai
+    </div>
+    <div>
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false" style="color: var(--primary-color);">
+            <span id="dropdownTitle">OUT 1</span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 1',1)" >OUT 1</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 2',2)" >OUT 2</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 3',3)" >OUT 3</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 4',4)" >OUT 4</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 5',5)" >OUT 5</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 6',6)" >OUT 6</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 7',7)" >OUT 7</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 8',8)" >OUT 8</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 9',9)" >OUT 9</a></li>
+          <li><a class="dropdown-item" href="#" style="color: var(--primary-color);" onclick="changeBayYearly('OUT 10',10)">OUT 10</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">
+    Peak Load
+  </div>
+  <table class="table" style="width: 90%; margin-left: 5%;">
+
+    <tr class="header-row">
+      <th scope="col">Month <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Date <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Time <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vab (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vbc (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vca (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">La (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Ib (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Ic (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">P (MW) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Q (MVAR) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">PF (%) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+    </tr>
+
+    <tbody style="font-size: 9px;" hx-get="/yearly-peak" hx-trigger="load" id="yearly-peak">
+
+
+    </tbody>
+  </table>
+  <div style="text-align: center;font-size: 18px;font-weight: 700;color: var(--primary-color);">
+    Light Load
+  </div>
+  <table class="table" style="width: 90%; margin-left: 5%;">
+
+    <tr class="header-row">
+      <th scope="col">Month <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Date <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Time <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vab (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vbc (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Vca (kV) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">La (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Ib (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Ic (A) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">P (MW) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">Q (MVAR) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+      <th scope="col">PF (%) <a href="#"><img src="./static/icons/down.png" alt="down" width="24px" height="24px"></a>
+      </th>
+    </tr>
+
+    <tbody style="font-size: 9px;" hx-get="/yearly-light" hx-trigger="load" id="yearly-light">
+    </tbody>
+  </table>
+  <script src="static/htmx.min.js"></script>
+  <!-- <script src="./htmx.min.js"></script> -->
+</body>
+
+</html>

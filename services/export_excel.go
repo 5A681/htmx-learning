@@ -12,7 +12,7 @@ import (
 )
 
 type ExportExcel interface {
-	ExportExcelDaily(dailyData []entity.DataTmps) error
+	ExportExcelDaily(dailyData []entity.DataTmps, fileName string) error
 }
 type exportExcel struct {
 	excel *excelize.File
@@ -22,7 +22,9 @@ func NewExportExcel(excel *excelize.File) ExportExcel {
 	return exportExcel{excel}
 }
 
-func (e exportExcel) ExportExcelDaily(dailyData []entity.DataTmps) error {
+func (e exportExcel) ExportExcelDaily(dailyData []entity.DataTmps, fileName string) error {
+	filePath := fileName
+
 	sheetName := "Sheet1"
 
 	index, _ := e.excel.NewSheet(sheetName)
@@ -172,7 +174,7 @@ func (e exportExcel) ExportExcelDaily(dailyData []entity.DataTmps) error {
 	// Set active sheet and save the file
 	e.excel.SetActiveSheet(index)
 
-	if err = e.excel.SaveAs("Book1.xlsx"); err != nil {
+	if err = e.excel.SaveAs(filePath); err != nil {
 		return err
 	}
 

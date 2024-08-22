@@ -4,10 +4,10 @@
     --body-color: #e4e9f7;
     --sidebar-color: #fff;
     --primary-color: #4B0082;
-    --primary-color-light: #DDA0DD;
+    --primary-color-light: #C3B1E1;
     --toggle-color: #ddd;
     --text-color: #707070;
-    --secondary-color: #D397F8;
+    --secondary-color: #C3B1E1;
 
     /* ====== Transaction ========*/
 
@@ -144,4 +144,13 @@ header .image-text .header-text{
 .sidebar li a:hover .icon,
 .sidebar li a:hover .text{
     color: var(--sidebar-color);
+}
+
+
+.bdr {
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 6px;
+  overflow-y: hidden;
+  
 }

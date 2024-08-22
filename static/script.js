@@ -43,3 +43,18 @@ function monthlyChangeBay(bay){
     });
    
 }
+function dailyPDF(){
+    //htmx.ajax('GET',`/export-pdf-daily`).then(()=>{
+       window.open("/export-pdf-daily","_blank")
+       console.log("download")
+   // });
+   // hx-get="/daily-data" hx-target="#body-table" hx-trigger="click" hx-vals='{"bay":1}'
+}
+
+function dailyXLSX(){
+    //htmx.ajax('GET',`/export-pdf-daily`).then(()=>{
+       window.open("/export-xlsx-daily","_blank")
+       console.log("download xlsx")
+   // });
+   // hx-get="/daily-data" hx-target="#body-table" hx-trigger="click" hx-vals='{"bay":1}'
+}

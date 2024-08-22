@@ -10,7 +10,10 @@ import (
 	"htmx-learning/services"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -26,17 +29,11 @@ func main() {
 
 	defer f.Close()
 
-	datas, err := service.GetLatestData(4, filter.SortData{Time: false})
-
-	if err != nil {
-		panic(err)
-	}
-
-	excelSrv := services.NewExportExcel(f)
-	err = excelSrv.ExportExcelDaily(datas)
-	if err != nil {
-		panic(err)
-	}
+	// excelSrv := services.NewExportExcel(f)
+	// err = excelSrv.ExportExcelDaily(datas)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	// fs := http.FileServer(http.Dir("./static"))
 	// http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -481,8 +478,79 @@ func main() {
 
 		return c.String(200, responeHtml)
 	})
+	e.GET("/export-pdf-daily", func(c echo.Context) error {
+
+		DeleteFile()
+
+		datas, err := service.GetLatestData(dailyBay, filterDaily)
+
+		if err != nil {
+			log.Println("err:", err.Error())
+			return c.String(200, ``)
+		}
+		fileName := fmt.Sprintf("%d.pdf", time.Now().Unix())
+		err = services.ExportPdfDaily(datas, fileName)
+		if err != nil {
+			log.Println("err:", err.Error())
+			return c.String(200, ``)
+		}
+
+		//time.Sleep(1 * time.Second)
+		return c.File(fileName)
+	})
+
+	e.GET("/export-xlsx-daily", func(c echo.Context) error {
+
+		DeleteFile()
+		datas, err := service.GetLatestData(dailyBay, filterDaily)
+
+		if err != nil {
+			log.Println("err:", err.Error())
+			return c.String(200, ``)
+		}
+		fileName := fmt.Sprintf("%d.xlsx", time.Now().Unix())
+		excelSrv := services.NewExportExcel(f)
+		err = excelSrv.ExportExcelDaily(datas, fileName)
+
+		if err != nil {
+			log.Println("err:", err.Error())
+			return c.String(200, ``)
+		}
+
+		// c.Response().Header().Set(echo.HeaderContentType, "application/pdf")
+		// c.Response().Header().Set("Content-Disposition", "inline; filename="+fileName)
+		//time.Sleep(1 * time.Second)
+		return c.File(fileName)
+	})
 
 	e.Logger.Printf("listening on port:", config.HTTP_PORT)
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", config.HTTP_PORT)))
 
+}
+
+func DeleteFile() {
+	pdfFiles, err := filepath.Glob(filepath.Join("", "*.pdf"))
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Iterate over the list of files and delete each one
+	for _, file := range pdfFiles {
+		err := os.Remove(file)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Printf("Deleted: %s\n", file)
+	}
+	xlsxFiles, err := filepath.Glob(filepath.Join("", "*.xlsx"))
+	if err != nil {
+		log.Println(err)
+	}
+	for _, file := range xlsxFiles {
+		err := os.Remove(file)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Printf("Deleted: %s\n", file)
+	}
 }
